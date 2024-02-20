@@ -1,113 +1,263 @@
-import Image from "next/image";
+'use client';
+import { useRouter } from 'next/navigation';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { ImageDataAtom } from './store/imagestore';
+import { useAtom } from 'jotai';
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+interface FormData {
+	bg_prompt: string;
+	webinar_title: string;
+	webinar_description: string;
+	webinar_date_time: string;
+	speaker_name: string;
+	speaker_designation: string;
 }
+
+const CreatePoster = () => {
+	const router = useRouter();
+	const [, setImageAtom] = useAtom(ImageDataAtom);
+	const [formData, setFormData] = useState<FormData>({
+		bg_prompt: '',
+		webinar_title: '',
+		webinar_description: '',
+		webinar_date_time: '',
+		speaker_name: '',
+		speaker_designation: '',
+	});
+
+	const [speakerPhoto, setSpeakerPhoto] = useState<File | null>(null);
+	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
+		const { name, value } = e.target;
+		setFormData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
+	};
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			const file = e.target.files[0];
+			setSpeakerPhoto(file);
+			setPreviewUrl(URL.createObjectURL(file));
+		}
+	};
+
+	const handleClearPhoto = () => {
+		setSpeakerPhoto(null);
+		setPreviewUrl(null);
+	};
+
+	const handleSubmit = async (e: FormEvent) => {
+		e.preventDefault();
+		setIsLoading(true);
+
+		const form = new FormData();
+		Object.keys(formData).forEach((key) => {
+			form.append(key, formData[key as keyof FormData]);
+		});
+		if (speakerPhoto) form.append('speaker_photo', speakerPhoto);
+
+		try {
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_BACKEND_URL}/generate_webinar_poster`,
+				{
+					method: 'POST',
+					body: form,
+				},
+			);
+			const data = await response.json();
+			console.log(data);
+			setIsLoading(false);
+			if (data.image) {
+				setImageAtom(data.image);
+				router.push(`/poster-display`);
+			}
+
+			// Handle success, show preview, offer download, etc.
+		} catch (err) {
+			console.error(err);
+			// Handle error
+		}
+	};
+
+	return (
+		<div className='container mx-auto p-4 mt-10 bg-[#101827] shadow-lg rounded-lg'>
+			<h2 className='text-2xl font-bold text-center text-white my-4'>
+				ME Webinar Poster Generator
+			</h2>
+			<h4 className='text-md font-bold text-center text-white my-4'>
+				note: add a "/" whenever you want a newline
+			</h4>
+			{isLoading ? (
+				<div className='flex justify-center items-center'>
+					<img
+						className='w-20 h-20 animate-spin'
+						src='https://www.svgrepo.com/show/199956/loading-loader.svg'
+						alt='Loading icon'
+					/>
+				</div>
+			) : (
+				<form onSubmit={handleSubmit} className='space-y-6 px-8 py-6'>
+					<div>
+						<label
+							htmlFor='bg_prompt'
+							className='block text-white font-medium mb-2'
+						>
+							Background Image Prompt
+						</label>
+
+						<input
+							required
+							type='text'
+							id='bg_prompt'
+							name='bg_prompt'
+							value={formData.bg_prompt}
+							onChange={handleChange}
+							className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+						/>
+					</div>
+
+					<div>
+						<label
+							htmlFor='webinar_title'
+							className='block text-white font-medium mb-2'
+						>
+							Webinar Title
+						</label>
+						<input
+							placeholder='ME/WEBINAR'
+							required
+							type='text'
+							id='webinar_title'
+							name='webinar_title'
+							value={formData.webinar_title}
+							onChange={handleChange}
+							className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+						/>
+					</div>
+
+					<div>
+						<label
+							htmlFor='webinar_description'
+							className='block text-white font-medium mb-2'
+						>
+							Webinar Description
+						</label>
+						<textarea
+							required
+							id='webinar_description'
+							name='webinar_description'
+							value={formData.webinar_description}
+							onChange={handleChange}
+							className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+						></textarea>
+					</div>
+
+					<div>
+						<label
+							htmlFor='webinar_date_time'
+							className='block text-white font-medium mb-2'
+						>
+							Webinar Date & Time
+						</label>
+						<input
+							placeholder='WEDNESDAY/21 FEB 2024/8:00 PM'
+							required
+							type='text'
+							id='webinar_date_time'
+							name='webinar_date_time'
+							value={formData.webinar_date_time}
+							onChange={handleChange}
+							className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+						/>
+					</div>
+
+					<div>
+						<label
+							htmlFor='speaker_name'
+							className='block text-white font-medium mb-2'
+						>
+							Speaker Name
+						</label>
+						<input
+							required
+							type='text'
+							id='speaker_name'
+							name='speaker_name'
+							value={formData.speaker_name}
+							onChange={handleChange}
+							className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+						/>
+					</div>
+
+					<div>
+						<label
+							htmlFor='speaker_designation'
+							className='block text-white font-medium mb-2'
+						>
+							Speaker Designation
+						</label>
+						<input
+							required
+							type='text'
+							id='speaker_designation'
+							name='speaker_designation'
+							value={formData.speaker_designation}
+							onChange={handleChange}
+							className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+						/>
+					</div>
+
+					<div>
+						<label
+							htmlFor='speaker_photo'
+							className='block text-white font-medium mb-2'
+						>
+							Speaker Photo
+						</label>
+						<input
+							required
+							type='file'
+							id='speaker_photo'
+							name='speaker_photo'
+							onChange={handleFileChange}
+							className='mt-1 block w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100'
+						/>
+						{previewUrl && (
+							<div className='mt-4'>
+								<img
+									src={previewUrl}
+									alt='Speaker Preview'
+									className='max-w-xs max-h-40'
+								/>
+								<button
+									type='button'
+									onClick={handleClearPhoto}
+									className='ml-4 text-sm text-red-500'
+								>
+									Clear Photo
+								</button>
+							</div>
+						)}
+					</div>
+
+					<div className='text-center'>
+						<button
+							type='submit'
+							className='inline-block px-6 py-2.5 bg-gradient-to-r from-green-400 to-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gradient-to-bl focus:bg-gradient-to-br focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gradient-to-l transition duration-150 ease-in-out'
+						>
+							Generate Poster
+						</button>
+					</div>
+				</form>
+			)}
+		</div>
+	);
+};
+
+export default CreatePoster;
